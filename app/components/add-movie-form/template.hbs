@@ -1,36 +1,69 @@
-<form class={{this.styleNamespace}} {{on "submit" this.addMovie}}>
-  <label data-test-title-label>
-    <h2>
-      Title
-    </h2>
-    <Input
-      @type="text"
-      @value={{this.title}}
-      class="form-title"
-      placeholder="Title..."
-    />
-  </label>
+<section class="{{this.styleNamespace}} movie-form-container">
+  <header class="form-header">
+    <h1>Movie Form</h1>
+    <p>Add a new movie or select a movie to update or delete it.</p>
+  </header>
 
-  <label data-test-description-label>
-    <h2>
-      Description
-    </h2>
-    <Input
-      @type="text"
-      @value={{this.description}}
-      class="form-description"
-      placeholder="Description..."
-      required={{true}}
-    />
-  </label>
+  <form class="movie-form">
+    <label data-test-title-label>
+      <h2>Title</h2>
+      <Input
+        @type="text"
+        @value={{this.movie.title}}
+        class="form-title"
+        placeholder="Title..."
+      />
+    </label>
 
-  {{#if this.errorMessage}}
-    <div class="error-message">
-      {{this.errorMessage}}
-    </div>
-  {{/if}}
+    <label data-test-description-label>
+      <h2>Description</h2>
+      <Input
+        @type="text"
+        @value={{this.movie.description}}
+        class="form-description"
+        placeholder="Description..."
+        required={{true}}
+      />
+    </label>
 
-  <button type="submit">
-    Add Movie
-  </button>
-</form>
+    <label data-test-rating-label>
+      <h2>Rating</h2>
+      <div class="slider-container">
+        <input
+          type="range"
+          min="0"
+          max="5"
+          step="0.5"
+          value={{this.movie.rating}}
+          class="slider"
+          oninput={{action this.updateRating}}
+        />
+        <span class="rating-value">{{this.rating}}</span>
+      </div>
+    </label>
+
+    {{#if this.errorMessage}}
+      <div class="error-message">
+        {{this.errorMessage}}
+      </div>
+    {{/if}}
+
+    {{#unless this.isEditMode}}
+      <button type="button" {{on "click" this.addMovie}} class="add-button">
+        Add Movie
+      </button>
+    {{/unless}}
+
+    {{#if this.isEditMode}}
+      <button type="button" {{on "click" this.updateMovie}} class="update-button">
+        Update Movie
+      </button>
+      <button type="button" {{on "click" this.deleteMovie}} class="delete-button">
+        Delete Movie
+      </button>
+      <button type="button" {{on "click" this.exitForm}} class="exit-button">
+        Exit
+      </button>
+    {{/if}}
+  </form>
+</section>

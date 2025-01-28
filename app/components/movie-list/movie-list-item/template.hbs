@@ -1,11 +1,13 @@
-<li class={{this.styleNamespace}}>
-  <div class="details">
-    <h2>
-      {{this.movies.title}}
-    </h2>
-
-    <p>
-      {{@movie.description}}
-    </p>
+<li
+  class="{{this.styleNamespace}}"
+  data-test-movie-item
+  {{on "click" (fn @onSelectMovie @movie)}}
+>
+  <div class="movie-card">
+    <div class="header">
+      <h2 class="title" data-test-movie-title>{{@movie.title}}</h2>
+      <p class="rating" data-test-movie-rating>{{@movie.rating}} / 5</p>
+    </div>
+    <p class="description" data-test-movie-description>{{@movie.description}}</p>
   </div>
 </li>

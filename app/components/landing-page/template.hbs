@@ -1,7 +1,16 @@
 <div class={{this.styleNamespace}}>
   <MovieListHeader />
 
-  <MovieList @movies={{this.movies}} />
 
-  <AddMovieForm @loadMovies={{this.loadMovies}} />
+  <MovieList 
+    @movies={{this.filteredMovies}} 
+    @onSelectMovie={{this.selectMovie}}
+  />
+
+  <AddMovieForm 
+    @loadMovies={{this.loadMovies}} 
+    @movie={{this.selectedMovie}} 
+    @editMode={{this.isEditMode}} 
+    @reset={{this.reset}} 
+  />
 </div>

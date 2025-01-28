@@ -3,39 +3,63 @@ import { collection, getFirestore, getDocs } from 'firebase/firestore';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import podNames from 'ember-component-css/pod-names';
+import { DEFAULT_MOVIE } from '../../utils/defaults';
 
 export default class LandingPage extends Component {
   styleNamespace = podNames['landing-page'];
 
-  /**
-   * Once there are added movies this tracked property will contain an array of
-   * objects with a `data` method and `ref` property.
-   *
-   * The ref can be used with the firestore method `updateDoc` to update the record:
-   *
-   *   await updateDoc(movie.ref, { title: 'Updated Title' });
-   *
-   * The ref can also be used with the firestore method `deleteDoc` to delete the record:
-   *
-   *   await deleteDoc(movie.ref);
-   *
-   */
-  @tracked movies;
+  // All movies fetched from Firebase
+  @tracked movies = [];
 
-  @action async loadMovies() {
-    const db = getFirestore();
-    const moviesRef = collection(db, 'movies');
-    const moviesSnapshot = await getDocs(moviesRef);
-    const movies = [];
+  // Selected movie for editing
+  @tracked selectedMovie = { ...DEFAULT_MOVIE };
 
-    moviesSnapshot.forEach((doc) => movies.push(doc));
+  // Determines if the form is in edit mode
+  @tracked isEditMode = false;
 
-    this.movies = movies;
+  // Action: Select a movie to edit
+  @action
+  selectMovie(movie) {
+    this.isEditMode = true;
+    this.selectedMovie = movie;
   }
 
+  // Action: Reset the form to add a new movie
+  @action
+  reset() {
+    this.isEditMode = false;
+    this.selectedMovie = { ...DEFAULT_MOVIE };
+  }
+  }
+
+  // Action: Load movies from Firebase and initialize the filtered list
+  @action
+  async loadMovies() {
+    try {
+      const db = getFirestore(); // Initialize Firestore
+      const moviesRef = collection(db, 'movies'); // Reference the 'movies' collection
+      const moviesSnapshot = await getDocs(moviesRef); // Fetch all documents
+      const movies = [];
+
+      // Loop through the documents and build the movies array
+      moviesSnapshot.forEach((doc) => {
+        movies.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      // Set the movies and initialize the filtered movies list
+      this.movies = movies;
+      this.filteredMovies = movies;
+    } catch (error) {
+      console.error('Error loading movies:', error);
+    }
+  }
+
+  // Constructor: Load movies when the component is initialized
   constructor(owner, args) {
     super(owner, args);
-
-    this.loadMovies();
+    this.loadMovies(); // Load movies on component initialization
   }
 }

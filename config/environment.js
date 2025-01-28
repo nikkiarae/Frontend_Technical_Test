@@ -21,7 +21,6 @@ module.exports = function (environment) {
   };
 
   ENV.firebase = {
-    // add firebase config here
   };
 
   if (environment === 'test') {

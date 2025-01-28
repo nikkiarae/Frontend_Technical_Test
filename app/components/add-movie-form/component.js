@@ -9,11 +9,24 @@ export default class AddMovieForm extends Component {
 
   @service firebase;
 
-  @tracked description;
-
-  @tracked title;
+  @tracked rating;
 
   @tracked errorMessage;
+
+  get movie() {
+    return this.args.movie;
+  }
+
+  get isEditMode() {
+    return this.args.editMode;
+  }
+
+  @action
+  updateRating(event) {
+    const value = event.target.value;
+    this.rating = parseFloat(value);
+    this.movie.rating = parseFloat(value);
+  }
 
   @action
   async addMovie(event) {
@@ -22,16 +35,57 @@ export default class AddMovieForm extends Component {
     this.errorMessage = undefined;
 
     try {
-      const { description, title } = this;
+      await this.firebase.addMovie(this.movie);
 
-      await this.firebase.addMovie(title, description);
-
-      this.description = undefined;
-      this.title = undefined;
+      this.args.reset();
 
       this.args.loadMovies();
     } catch (error) {
       this.errorMessage = error?.message;
     }
+  }
+
+  @action
+  async updateMovie(event) {
+    event.preventDefault();
+
+    this.errorMessage = undefined;
+
+    try {
+      const { description, title, rating, id } = this.movie;
+
+
+      await this.firebase.updateMovie(id, { title, description, rating });
+
+      this.args.reset();
+
+      this.args.loadMovies();
+    } catch (error) {
+      this.errorMessage = error?.message;
+    }
+  }
+
+  @action
+  async deleteMovie(event) {
+    event.preventDefault();
+
+    this.errorMessage = undefined;
+
+    try {
+      await this.firebase.deleteMovie(this.movie.id);
+
+      this.args.reset();
+
+      this.args.loadMovies();
+    } catch (error) {
+      this.errorMessage = error?.message;
+    }
+  }
+
+  @action
+  exitForm() {
+    this.rating = 0;
+    this.errorMessage = undefined;
+    this.args.reset();
   }
 }
