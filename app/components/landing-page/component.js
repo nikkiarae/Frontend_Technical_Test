@@ -11,6 +11,12 @@ export default class LandingPage extends Component {
   // All movies fetched from Firebase
   @tracked movies = [];
 
+  // Filtered movies based on search input
+  @tracked filteredMovies = [];
+
+  // Search text input from the user
+  @tracked searchText = '';
+
   // Selected movie for editing
   @tracked selectedMovie = { ...DEFAULT_MOVIE };
 
@@ -30,6 +36,29 @@ export default class LandingPage extends Component {
     this.isEditMode = false;
     this.selectedMovie = { ...DEFAULT_MOVIE };
   }
+
+  // Action: Filter movies based on search text
+  @action
+  filterMovies(searchText) {
+    this.searchText = searchText;
+
+    // If no search text, reset the filtered list
+    if (!searchText) {
+      this.filteredMovies = this.movies;
+      return;
+    }
+
+    // Convert search text to lowercase for case-insensitive search
+    const searchTextLower = searchText.toLowerCase();
+
+    // Filter movies based on title or description
+    this.filteredMovies = this.movies.filter((movie) => {
+      const title = movie.title?.toLowerCase() || '';
+      const description = movie.description?.toLowerCase() || '';
+      return (
+        title.includes(searchTextLower) || description.includes(searchTextLower)
+      );
+    });
   }
 
   // Action: Load movies from Firebase and initialize the filtered list

@@ -1,0 +1,10 @@
+<div class="{{this.styleNamespace}} search-container">
+  <input
+    id="movie-search"
+    type="text"
+    placeholder="Search by title or description..."
+    value={{@searchText}}
+    class="search-input"
+    {{on "input" this.handleSearch}}
+  />
+</div>

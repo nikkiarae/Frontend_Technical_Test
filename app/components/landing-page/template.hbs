@@ -1,6 +1,10 @@
 <div class={{this.styleNamespace}}>
   <MovieListHeader />
 
+  <MovieSearch 
+    @searchText={{this.searchText}}
+    @onSearch={{this.filterMovies}}
+  />
 
   <MovieList 
     @movies={{this.filteredMovies}} 
