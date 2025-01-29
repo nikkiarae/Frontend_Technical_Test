@@ -1,7 +1,21 @@
 # Clarus WMS - Technical Test
 
-This is a example project using Ember v5.8
-Below are some instructions on how to set up this repository.
+This is an example project using **Ember v5.8** that integrates with **Firebase Firestore** to manage a **Movie List**.  
+Users can **search**, **add**, **update**, and **delete** movies in a **Firestore database**.
+
+---
+
+## 🚀 **Features**
+
+### 🎬 **1. Movie Management System**
+The app allows users to manage a collection of movies stored in Firebase.  
+
+✔ **Search for Movies** 
+✔ **Create a Movie** 
+✔ **Update a Movie**
+✔ **Delete a Movie**
+
+---
 
 ## Instructions
 
@@ -61,6 +75,53 @@ And then you will have your own firebase setup.
 > If you have any problem setting up this repo, please, send us an email as soon as possible, so we can solve it!
 
 ---
+
+## 🔎 How the App Works
+
+### 1. Searching for Movies 🔍
+- Enter a **movie title** or **description** in the **search bar**.
+- The **movie list updates in real-time** to display **only matching movies**.
+- **Search is case-insensitive** and works with **partial matches**.
+- If the **search box is empty**, **all movies** are displayed.
+
+#### **Example:**
+✅ **Searching `"Inception"`** will display **only Inception**.  
+✅ **Searching `"thriller"`** will display **movies with "thriller"** in the **title or description**.  
+
+---
+
+### 2. Adding a New Movie ➕
+1. Click the **"Add Movie"** button.
+2. Enter the **Title**, **Description**, and **Rating**.
+3. Click **"Save"** to store the movie in **Firebase**.
+4. The **list updates automatically** after submission.
+
+#### **Example:**
+📝 **Title:** `"The Dark Knight"`  
+📝 **Description:** `"A gripping crime thriller featuring Batman"`  
+📝 **Rating:** `5.0`  
+
+---
+
+### 3. Updating a Movie ✏️
+1. Click on an **existing movie** from the list.
+2. The **movie details appear** in the **edit form**.
+3. Modify the **title, description, or rating**.
+4. Click **"Update Movie"** to **save changes**.
+5. The **list updates automatically**.
+
+#### **Example:**
+📌 **Before:** `"The Dark Knight"` - **Rating: 4.0**  
+📌 **After clicking Update:** `"The Dark Knight"` - **Rating: 5.0**  
+
+---
+
+### 4. Deleting a Movie 🗑️
+1. Click on a **movie** from the list.
+2. Click the **"Delete Movie"** button.
+3. The movie is **permanently removed** from Firebase.
+
+⚠ **Warning:** Deletions are **permanent** and **cannot be undone**!
 
 ## Useful Links
 
