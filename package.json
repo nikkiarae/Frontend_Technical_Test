@@ -73,7 +73,8 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
     "tracked-built-ins": "^3.3.0",
-    "webpack": "^5.91.0"
+    "webpack": "^5.91.0",
+    "ember-cli-dotenv": "^4.0.0"
   },
   "engines": {
     "node": ">= 18"
