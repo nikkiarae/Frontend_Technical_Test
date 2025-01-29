@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 export default class MovieSearch extends Component {
   styleNamespace = podNames['movie-search'];
 
+  // Action: triggers onSearch when text changes
   @action
   handleSearch(event) {
     const searchText = event.target.value;

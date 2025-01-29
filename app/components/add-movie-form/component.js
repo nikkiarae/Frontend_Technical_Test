@@ -54,7 +54,6 @@ export default class AddMovieForm extends Component {
     try {
       const { description, title, rating, id } = this.movie;
 
-
       await this.firebase.updateMovie(id, { title, description, rating });
 
       this.args.reset();
